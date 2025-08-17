@@ -1,12 +1,15 @@
+import Layout from "../components/layout";
 import { CAROUSEL_DATA } from "../data-sets/carousel";
 import { useState, useEffect } from "react";
 
 export default function Carousel() {
   return (
-    <div className="w-full relative overflow-hidden bg-neutral-100 h-[100vh] flex items-center justify-center">
-      <CarouselPerformance />
+    <Layout title="Carousel">
+      <div>
+        <CarouselPerformance />
+      </div>
       <div
-        className="flex gap-4 overflow-x-auto scrollbar-hide p-4"
+        className="flex gap-4 overflow-x-auto scrollbar-hide "
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
@@ -38,79 +41,66 @@ export default function Carousel() {
           </div>
         ))}
       </div>
-    </div>
+    </Layout>
   );
 }
 
 function CarouselPerformance() {
-  const totalVideos = CAROUSEL_DATA.length;
   const [metrics, setMetrics] = useState({
-    totalLoaded: 0, // Videos that have fully loaded
-    currentlyLoading: 0, // Videos currently in loading state
-    totalMemory: 0, // Estimated memory usage
-    networkRequests: 0, // Active network requests
+    loadedVideos: new Set(),
+    totalVideos: 0,
   });
 
+  // Track total videos in the carousel
   useEffect(() => {
-    const updateMetrics = () => {
-      const videos = document.querySelectorAll("video");
-      let loading = 0;
-      let loaded = 0;
-      let memoryUsage = 0;
-      let activeRequests = 0;
+    setMetrics((prev) => ({
+      ...prev,
+      totalVideos: CAROUSEL_DATA.length,
+    }));
+  }, []);
 
-      videos.forEach((video) => {
-        // Check loading state
-        if (video.dataset.loading === "true") {
-          loading++;
-          activeRequests++;
-        }
-        // Check loaded state
-        if (video.dataset.loaded === "true") {
-          loaded++;
-          // Rough estimation of video memory usage (based on dimensions and duration)
-          if (video.videoWidth && video.videoHeight) {
-            const resolution = video.videoWidth * video.videoHeight;
-            // Rough estimate: 3 bytes per pixel (RGB) * resolution * 1 second
-            memoryUsage += (resolution * 3) / (1024 * 1024); // Convert to MB
-          }
-        }
-        // Check if video has source but not loaded
-        if (video.src && !video.dataset.loaded) {
-          activeRequests++;
-        }
-      });
+  // Setup video load tracking
+  useEffect(() => {
+    const handleVideoLoad = (event: Event) => {
+      const video = event.target as HTMLVideoElement;
+      setMetrics((prev) => ({
+        ...prev,
+        loadedVideos: new Set([...prev.loadedVideos, video.src]),
+      }));
+    };
 
-      setMetrics({
-        totalLoaded: loaded,
-        currentlyLoading: loading,
-        totalMemory: Math.round(memoryUsage * 100) / 100,
-        networkRequests: activeRequests,
+    const handleVideoUnload = (event: Event) => {
+      const video = event.target as HTMLVideoElement;
+      setMetrics((prev) => {
+        const newLoadedVideos = new Set(prev.loadedVideos);
+        newLoadedVideos.delete(video.src);
+        return {
+          ...prev,
+          loadedVideos: newLoadedVideos,
+        };
       });
     };
 
-    // Initial update
-    updateMetrics();
-
-    // Set up observers
-    const observer = new MutationObserver(updateMetrics);
-    observer.observe(document.body, {
-      subtree: true,
-      attributes: true,
-      attributeFilter: ["src", "data-loading", "data-loaded"],
+    // Add listeners to all videos
+    const videos = document.querySelectorAll("video");
+    videos.forEach((video) => {
+      // loadeddata fires when the video is loaded and ready to play
+      video.addEventListener("loadeddata", handleVideoLoad);
+      // emptied fires when the video is unloaded
+      video.addEventListener("emptied", handleVideoUnload);
     });
 
-    // Update metrics periodically for dynamic values
-    const interval = setInterval(updateMetrics, 1000);
-
     return () => {
-      observer.disconnect();
-      clearInterval(interval);
+      const videos = document.querySelectorAll("video");
+      videos.forEach((video) => {
+        video.removeEventListener("loadeddata", handleVideoLoad);
+        video.removeEventListener("emptied", handleVideoUnload);
+      });
     };
   }, []);
 
   return (
-    <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm p-4 z-10">
+    <div className="bg-white inline-flex rounded-lg shadow-sm p-4">
       <div className="space-y-3">
         <h3 className="text-sm font-medium text-gray-800">
           Performance Metrics
@@ -119,42 +109,8 @@ function CarouselPerformance() {
           <div className="flex items-center justify-between gap-3 text-xs">
             <span className="text-gray-600">Videos Loaded in memory:</span>
             <span className="font-medium text-gray-900">
-              {metrics.totalLoaded} / {totalVideos}
+              {metrics.loadedVideos.size} / {metrics.totalVideos}
             </span>
-          </div>
-          <div className="flex items-center justify-between gap-3 text-xs">
-            <span className="text-gray-600">Currently Loading:</span>
-            <span
-              className={`font-medium ${
-                metrics.currentlyLoading > 0
-                  ? "text-orange-500"
-                  : "text-gray-900"
-              }`}
-            >
-              {metrics.currentlyLoading}
-            </span>
-          </div>
-          <div className="flex items-center justify-between gap-3 text-xs">
-            <span className="text-gray-600">Network Requests:</span>
-            <span
-              className={`font-medium ${
-                metrics.networkRequests > 0 ? "text-blue-500" : "text-gray-900"
-              }`}
-            >
-              {metrics.networkRequests}
-            </span>
-          </div>
-          <div className="flex items-center justify-between gap-3 text-xs">
-            <span className="text-gray-600">Est. Memory Usage:</span>
-            <span className="font-medium text-gray-900">
-              {metrics.totalMemory} MB
-            </span>
-          </div>
-          <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden mt-2">
-            <div
-              className="h-full bg-blue-500 transition-all duration-300"
-              style={{ width: `${(metrics.totalLoaded / totalVideos) * 100}%` }}
-            />
           </div>
         </div>
       </div>
