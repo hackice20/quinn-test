@@ -26,13 +26,6 @@ export default function Carousel() {
                 muted
                 loop
                 playsInline
-                onLoadStart={(e) => {
-                  e.currentTarget.dataset.loading = "true";
-                }}
-                onCanPlay={(e) => {
-                  e.currentTarget.dataset.loading = "false";
-                  e.currentTarget.dataset.loaded = "true";
-                }}
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 to-transparent">
                 <div className="h-[45px] sm:h-[52px] flex items-center px-4 sm:px-5">
@@ -124,7 +117,7 @@ function CarouselPerformance() {
         </h3>
         <div className="space-y-2">
           <div className="flex items-center justify-between gap-3 text-xs">
-            <span className="text-gray-600">Videos Loaded:</span>
+            <span className="text-gray-600">Videos Loaded in memory:</span>
             <span className="font-medium text-gray-900">
               {metrics.totalLoaded} / {totalVideos}
             </span>
