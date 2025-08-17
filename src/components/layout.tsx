@@ -16,7 +16,7 @@ const navItems: { label: string; to: string }[] = [
   },
   {
     label: "Invoice",
-    to: "/invoice",
+    to: "/invoices",
   },
 ];
 
@@ -24,7 +24,7 @@ export default function Layout({ children, title }: LayoutProps) {
   const location = useLocation();
   return (
     <div className="p-2 md:p-4">
-      <nav className="flex gap-4 mb-4 text-sm justify-center p-4 bg-white rounded-lg border border-gray-200">
+      <nav className="flex sticky top-0 gap-4 mb-4 text-sm justify-center p-4 bg-white rounded-lg border border-gray-200">
         {navItems.map((item) => (
           <Link
             key={item.to}
