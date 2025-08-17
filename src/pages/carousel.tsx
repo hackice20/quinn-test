@@ -1,8 +1,6 @@
 import { CAROUSEL_DATA } from "../data-sets/carousel";
 
 export default function Carousel() {
-  const carouselData = CAROUSEL_DATA;
-
   return (
     <div className="w-full overflow-hidden bg-neutral-100 h-[100vh] flex items-center justify-center">
       <div
@@ -13,7 +11,7 @@ export default function Carousel() {
           WebkitOverflowScrolling: "touch",
         }}
       >
-        {carouselData.map((item, index) => (
+        {CAROUSEL_DATA.map((item, index) => (
           <div
             key={index}
             className="group flex flex-col items-center w-[190px]  h-[360px] sm:w-[300px] sm:h-[540px] flex-shrink-0 rounded-2xl overflow-hidden"
