@@ -46,71 +46,115 @@ export default function Carousel() {
 }
 
 function CarouselPerformance() {
+  const totalVideos = CAROUSEL_DATA.length;
   const [metrics, setMetrics] = useState({
-    loadedVideos: new Set(),
-    totalVideos: 0,
+    totalLoaded: 0,
+    currentlyLoading: 0,
+    totalMemory: 0,
+    networkRequests: 0,
   });
 
-  // Track total videos in the carousel
   useEffect(() => {
-    setMetrics((prev) => ({
-      ...prev,
-      totalVideos: CAROUSEL_DATA.length,
-    }));
-  }, []);
+    const updateMetrics = () => {
+      const videos = document.querySelectorAll("video");
+      let loading = 0;
+      let loaded = 0;
+      let memoryUsage = 0;
+      let activeRequests = 0;
 
-  // Setup video load tracking
-  useEffect(() => {
-    const handleVideoLoad = (event: Event) => {
-      const video = event.target as HTMLVideoElement;
-      setMetrics((prev) => ({
-        ...prev,
-        loadedVideos: new Set([...prev.loadedVideos, video.src]),
-      }));
-    };
+      videos.forEach((video) => {
+        // Check if video has source
+        if (video.src) {
+          // Video is considered loading if it's not ready to play
+          if (!video.readyState) {
+            loading++;
+            activeRequests++;
+          }
+          // HAVE_ENOUGH_DATA = 4, means video is loaded and ready to play
+          if (video.readyState === 4) {
+            loaded++;
+            // Calculate memory only for loaded videos
+            if (video.videoWidth && video.videoHeight) {
+              const resolution = video.videoWidth * video.videoHeight;
+              memoryUsage += (resolution * 3) / (1024 * 1024);
+            }
+          }
+          // Count as network request if still loading
+          if (video.readyState < 4) {
+            activeRequests++;
+          }
+        }
+      });
 
-    const handleVideoUnload = (event: Event) => {
-      const video = event.target as HTMLVideoElement;
-      setMetrics((prev) => {
-        const newLoadedVideos = new Set(prev.loadedVideos);
-        newLoadedVideos.delete(video.src);
-        return {
-          ...prev,
-          loadedVideos: newLoadedVideos,
-        };
+      setMetrics({
+        totalLoaded: loaded,
+        currentlyLoading: loading,
+        totalMemory: Math.round(memoryUsage * 100) / 100,
+        networkRequests: activeRequests,
       });
     };
 
-    // Add listeners to all videos
-    const videos = document.querySelectorAll("video");
-    videos.forEach((video) => {
-      // loadeddata fires when the video is loaded and ready to play
-      video.addEventListener("loadeddata", handleVideoLoad);
-      // emptied fires when the video is unloaded
-      video.addEventListener("emptied", handleVideoUnload);
+    const interval = setInterval(updateMetrics, 500);
+    const observer = new MutationObserver(updateMetrics);
+
+    observer.observe(document.body, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["src"],
     });
 
     return () => {
-      const videos = document.querySelectorAll("video");
-      videos.forEach((video) => {
-        video.removeEventListener("loadeddata", handleVideoLoad);
-        video.removeEventListener("emptied", handleVideoUnload);
-      });
+      observer.disconnect();
+      clearInterval(interval);
     };
   }, []);
 
   return (
-    <div className="bg-white inline-flex rounded-lg shadow-sm p-4">
+    <div className=" bg-white inline-flex rounded-lg shadow-sm p-4 z-10">
       <div className="space-y-3">
         <h3 className="text-sm font-medium text-gray-800">
           Performance Metrics
         </h3>
         <div className="space-y-2">
           <div className="flex items-center justify-between gap-3 text-xs">
-            <span className="text-gray-600">Videos Loaded in memory:</span>
+            <span className="text-gray-600">Videos Loaded:</span>
             <span className="font-medium text-gray-900">
-              {metrics.loadedVideos.size} / {metrics.totalVideos}
+              {metrics.totalLoaded} / {totalVideos}
             </span>
+          </div>
+          <div className="flex items-center justify-between gap-3 text-xs">
+            <span className="text-gray-600">Currently Loading:</span>
+            <span
+              className={`font-medium ${
+                metrics.currentlyLoading > 0
+                  ? "text-orange-500"
+                  : "text-gray-900"
+              }`}
+            >
+              {metrics.currentlyLoading}
+            </span>
+          </div>
+          <div className="flex items-center justify-between gap-3 text-xs">
+            <span className="text-gray-600">Network Requests:</span>
+            <span
+              className={`font-medium ${
+                metrics.networkRequests > 0 ? "text-blue-500" : "text-gray-900"
+              }`}
+            >
+              {metrics.networkRequests}
+            </span>
+          </div>
+          <div className="flex items-center justify-between gap-3 text-xs">
+            <span className="text-gray-600">Est. Memory Usage:</span>
+            <span className="font-medium text-gray-900">
+              {metrics.totalMemory} MB
+            </span>
+          </div>
+          <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden mt-2">
+            <div
+              className="h-full bg-blue-500 transition-all duration-300"
+              style={{ width: `${(metrics.totalLoaded / totalVideos) * 100}%` }}
+            />
           </div>
         </div>
       </div>
