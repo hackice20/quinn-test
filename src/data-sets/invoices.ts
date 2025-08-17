@@ -3,7 +3,6 @@ export const INVOICE_DATA = [
     businessName: "Koskii Private limited",
     id: "QUINN-INV-001",
     createdAt: "2025-08-17",
-    totalAmount: 1000,
     status: "pending",
     dueDate: "2025-09-17",
     amount: {
@@ -16,7 +15,7 @@ export const INVOICE_DATA = [
     businessName: "TechPro Solutions Inc",
     id: "QUINN-INV-002",
     createdAt: "2025-08-20",
-    totalAmount: 2500,
+
     status: "partially_paid",
     dueDate: "2025-09-20",
     amount: {
@@ -29,7 +28,6 @@ export const INVOICE_DATA = [
     businessName: "Global Retail Partners",
     id: "QUINN-INV-003",
     createdAt: "2025-08-22",
-    totalAmount: 3750,
     status: "partially_paid",
     dueDate: "2025-09-22",
     amount: {
@@ -42,7 +40,7 @@ export const INVOICE_DATA = [
     businessName: "Innovate Design Studio",
     id: "QUINN-INV-004",
     createdAt: "2025-08-25",
-    totalAmount: 1800,
+
     status: "paid",
     dueDate: "2025-09-25",
     amount: {
@@ -55,7 +53,7 @@ export const INVOICE_DATA = [
     businessName: "EcoGreen Solutions Ltd",
     id: "QUINN-INV-005",
     createdAt: "2025-08-28",
-    totalAmount: 4200,
+
     status: "partially_paid",
     dueDate: "2025-09-28",
     amount: {
@@ -68,7 +66,7 @@ export const INVOICE_DATA = [
     businessName: "Quantum Computing Labs",
     id: "QUINN-INV-006",
     createdAt: "2025-09-01",
-    totalAmount: 5500,
+
     status: "partially_paid",
     dueDate: "2025-10-01",
     amount: {
@@ -81,7 +79,7 @@ export const INVOICE_DATA = [
     businessName: "Artisan Crafts Co",
     id: "QUINN-INV-007",
     createdAt: "2025-09-03",
-    totalAmount: 800,
+
     status: "paid",
     dueDate: "2025-10-03",
     amount: {
@@ -94,7 +92,7 @@ export const INVOICE_DATA = [
     businessName: "Digital Marketing Pro",
     id: "QUINN-INV-008",
     createdAt: "2025-09-05",
-    totalAmount: 3200,
+
     status: "partially_paid",
     dueDate: "2025-10-05",
     amount: {
@@ -107,7 +105,7 @@ export const INVOICE_DATA = [
     businessName: "Smart Home Systems",
     id: "QUINN-INV-009",
     createdAt: "2025-09-08",
-    totalAmount: 4800,
+
     status: "partially_paid",
     dueDate: "2025-10-08",
     amount: {
@@ -120,7 +118,7 @@ export const INVOICE_DATA = [
     businessName: "Fresh Foods Market",
     id: "QUINN-INV-010",
     createdAt: "2025-09-10",
-    totalAmount: 1500,
+
     status: "paid",
     dueDate: "2025-10-10",
     amount: {
@@ -133,7 +131,7 @@ export const INVOICE_DATA = [
     businessName: "Cloud Services Plus",
     id: "QUINN-INV-011",
     createdAt: "2025-09-12",
-    totalAmount: 6000,
+
     status: "partially_paid",
     dueDate: "2025-10-12",
     amount: {
@@ -146,7 +144,7 @@ export const INVOICE_DATA = [
     businessName: "Urban Fashion Hub",
     id: "QUINN-INV-012",
     createdAt: "2025-09-15",
-    totalAmount: 2800,
+
     status: "partially_paid",
     dueDate: "2025-10-15",
     amount: {
@@ -159,7 +157,7 @@ export const INVOICE_DATA = [
     businessName: "Wellness Center Pro",
     id: "QUINN-INV-013",
     createdAt: "2025-09-18",
-    totalAmount: 3500,
+
     status: "paid",
     dueDate: "2025-10-18",
     amount: {
@@ -172,7 +170,7 @@ export const INVOICE_DATA = [
     businessName: "Data Analytics Corp",
     id: "QUINN-INV-014",
     createdAt: "2025-09-20",
-    totalAmount: 4500,
+
     status: "partially_paid",
     dueDate: "2025-10-20",
     amount: {
@@ -185,7 +183,7 @@ export const INVOICE_DATA = [
     businessName: "Green Energy Solutions",
     id: "QUINN-INV-015",
     createdAt: "2025-09-22",
-    totalAmount: 5200,
+
     status: "partially_paid",
     dueDate: "2025-10-22",
     amount: {
@@ -198,7 +196,7 @@ export const INVOICE_DATA = [
     businessName: "Modern Furniture Co",
     id: "QUINN-INV-016",
     createdAt: "2025-09-25",
-    totalAmount: 3800,
+
     status: "paid",
     dueDate: "2025-10-25",
     amount: {
@@ -211,7 +209,7 @@ export const INVOICE_DATA = [
     businessName: "Security Systems Ltd",
     id: "QUINN-INV-017",
     createdAt: "2025-09-28",
-    totalAmount: 4100,
+
     status: "partially_paid",
     dueDate: "2025-10-28",
     amount: {
@@ -224,7 +222,7 @@ export const INVOICE_DATA = [
     businessName: "Creative Studios Inc",
     id: "QUINN-INV-018",
     createdAt: "2025-10-01",
-    totalAmount: 2900,
+
     status: "partially_paid",
     dueDate: "2025-11-01",
     amount: {
@@ -237,7 +235,7 @@ export const INVOICE_DATA = [
     businessName: "Health Foods Direct",
     id: "QUINN-INV-019",
     createdAt: "2025-10-03",
-    totalAmount: 1900,
+
     status: "paid",
     dueDate: "2025-11-03",
     amount: {
@@ -250,7 +248,7 @@ export const INVOICE_DATA = [
     businessName: "Tech Education Center",
     id: "QUINN-INV-020",
     createdAt: "2025-10-05",
-    totalAmount: 3300,
+
     status: "partially_paid",
     dueDate: "2025-11-05",
     amount: {
@@ -263,7 +261,7 @@ export const INVOICE_DATA = [
     businessName: "Smart Logistics Pro",
     id: "QUINN-INV-021",
     createdAt: "2025-10-08",
-    totalAmount: 4700,
+
     status: "partially_paid",
     dueDate: "2025-11-08",
     amount: {
@@ -276,7 +274,7 @@ export const INVOICE_DATA = [
     businessName: "Digital Print Masters",
     id: "QUINN-INV-022",
     createdAt: "2025-10-10",
-    totalAmount: 2200,
+
     status: "paid",
     dueDate: "2025-11-10",
     amount: {
@@ -289,7 +287,7 @@ export const INVOICE_DATA = [
     businessName: "Web Solutions Hub",
     id: "QUINN-INV-023",
     createdAt: "2025-10-12",
-    totalAmount: 3600,
+
     status: "partially_paid",
     dueDate: "2025-11-12",
     amount: {
@@ -302,7 +300,7 @@ export const INVOICE_DATA = [
     businessName: "Organic Farm Fresh",
     id: "QUINN-INV-024",
     createdAt: "2025-10-15",
-    totalAmount: 2400,
+
     status: "partially_paid",
     dueDate: "2025-11-15",
     amount: {
@@ -315,7 +313,7 @@ export const INVOICE_DATA = [
     businessName: "Mobile App Developers",
     id: "QUINN-INV-025",
     createdAt: "2025-10-18",
-    totalAmount: 5800,
+
     status: "paid",
     dueDate: "2025-11-18",
     amount: {
@@ -328,7 +326,7 @@ export const INVOICE_DATA = [
     businessName: "Industrial Solutions Co",
     id: "QUINN-INV-026",
     createdAt: "2025-10-20",
-    totalAmount: 4900,
+
     status: "partially_paid",
     dueDate: "2025-11-20",
     amount: {
@@ -341,7 +339,7 @@ export const INVOICE_DATA = [
     businessName: "Fitness Equipment Pro",
     id: "QUINN-INV-027",
     createdAt: "2025-10-22",
-    totalAmount: 3900,
+
     status: "partially_paid",
     dueDate: "2025-11-22",
     amount: {
@@ -354,7 +352,7 @@ export const INVOICE_DATA = [
     businessName: "Office Supplies Plus",
     id: "QUINN-INV-028",
     createdAt: "2025-10-25",
-    totalAmount: 1600,
+
     status: "paid",
     dueDate: "2025-11-25",
     amount: {
@@ -367,7 +365,7 @@ export const INVOICE_DATA = [
     businessName: "Cloud Infrastructure Ltd",
     id: "QUINN-INV-029",
     createdAt: "2025-10-28",
-    totalAmount: 6500,
+
     status: "partially_paid",
     dueDate: "2025-11-28",
     amount: {
@@ -380,7 +378,7 @@ export const INVOICE_DATA = [
     businessName: "Marketing Analytics Pro",
     id: "QUINN-INV-030",
     createdAt: "2025-10-30",
-    totalAmount: 4300,
+
     status: "pending",
     dueDate: "2025-11-30",
     amount: {
