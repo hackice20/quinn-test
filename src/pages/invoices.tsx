@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 export default function Invoices() {
-  const [invoices, setInvoices] = useState(INVOICE_DATA);
+  const [invoices] = useState([...INVOICE_DATA]);
   return (
     <Layout title="Invoices">
       <div className="overflow-x-auto">
@@ -94,7 +94,7 @@ export default function Invoices() {
                     className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
                     onClick={() => {
                       // Edit functionality will be added later
-                      console.log("Edit clicked for invoice:", invoice.id);
+                      alert(`Implement edit functionality here`);
                     }}
                   >
                     Edit
