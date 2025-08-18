@@ -46,7 +46,7 @@ export default function Invoices() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {INVOICE_DATA.map((invoice) => (
+            {invoices.map((invoice) => (
               <TableRow key={invoice.id}>
                 <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {invoice.id}
